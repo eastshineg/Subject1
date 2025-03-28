@@ -42,8 +42,8 @@ namespace Nexon
 
 			if (_pressed == false)
 			{
-				_isUp = Input.GetKey(KeyCode.W);				
-				_isDown = Input.GetKey(KeyCode.S);
+				_isUp = Input.GetKey(KeyCode.S);				
+				_isDown = Input.GetKey(KeyCode.W);
 				_isLeft = Input.GetKey(KeyCode.A);
 				_isRight = Input.GetKey(KeyCode.D);
 				
@@ -62,8 +62,8 @@ namespace Nexon
 				}
 				else
 				{
-					_isUp = Input.GetKey(KeyCode.W);				
-					_isDown = Input.GetKey(KeyCode.S);
+					_isUp = Input.GetKey(KeyCode.S);				
+					_isDown = Input.GetKey(KeyCode.W);
 					_isLeft = Input.GetKey(KeyCode.A);
 					_isRight = Input.GetKey(KeyCode.D);
 				}
