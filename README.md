@@ -7,7 +7,7 @@ unity 2022.3.52f
 Summary
 -
 ![image](https://github.com/user-attachments/assets/e79c5088-bffa-47e2-a670-fe4b932d38d7)
-**- 플레이**
+- **플레이**
   - Assets/Scene의 subject.scene을 open한다음 play
 - **NeopleObject**
   - 서로 상호작용 및 제어를 위한 기본 class
