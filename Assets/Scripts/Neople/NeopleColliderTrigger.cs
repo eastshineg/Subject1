@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-public class NexonColliderTrigger : MonoBehaviour
+public class NeopleColliderTrigger : MonoBehaviour
 {
 	int _receiveLayer = 0;
 	public void ChangeReceiveLayer(int layer)
@@ -9,8 +9,8 @@ public class NexonColliderTrigger : MonoBehaviour
 		_receiveLayer = layer;
 	}
 
-	System.Action<NexonComponent> _onCollide = null;
-	public void RegisterOnCollide(System.Action<NexonComponent> onCollide)
+	System.Action<NeopleComponent> _onCollide = null;
+	public void RegisterOnCollide(System.Action<NeopleComponent> onCollide)
 	{
 		_onCollide = onCollide;
 	}
@@ -22,7 +22,7 @@ public class NexonColliderTrigger : MonoBehaviour
 			return;
 		}
 
-		var comp = other.gameObject.GetComponentInParent<NexonComponent>();
+		var comp = other.gameObject.GetComponentInParent<NeopleComponent>();
 		if (comp == null)
 		{
 			return;

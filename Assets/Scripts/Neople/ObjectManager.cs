@@ -2,34 +2,34 @@
 using Unity.VisualScripting;
 using UnityEngine;
 
-namespace Nexon
+namespace Neople
 {
 	public class ObjectManager
 	{
 		int _keyId = 0;
-		Dictionary<EnumObjectType, List<NexonObject>> _dictObjects = new();
-		HashSet<NexonObject> _claimedDictObjects = new();
+		Dictionary<EnumObjectType, List<NeopleObject>> _dictObjects = new();
+		HashSet<NeopleObject> _claimedDictObjects = new();
 		
-		public void Release(NexonObject nexonObject)
+		public void Release(NeopleObject NeopleObject)
 		{
-			if (nexonObject == null) return;
+			if (NeopleObject == null) return;
 			// 중복 해제 방지
-			if (nexonObject.IsValid == false) return;
-			if (_dictObjects.TryGetValue(nexonObject.ObjectType, out var objList) == false)
+			if (NeopleObject.IsValid == false) return;
+			if (_dictObjects.TryGetValue(NeopleObject.ObjectType, out var objList) == false)
 			{
 				Debug.LogError("Not found object list");
 				return;
 			}
 			
-			nexonObject.Release();
-			objList.Add(nexonObject);
+			NeopleObject.Release();
+			objList.Add(NeopleObject);
 
-			_claimedDictObjects.Remove(nexonObject);
+			_claimedDictObjects.Remove(NeopleObject);
 		}
 		
-		public NexonObject Claim(EnumObjectType objectType)
+		public NeopleObject Claim(EnumObjectType objectType)
 		{
-			NexonObject newObj = null;
+			NeopleObject newObj = null;
 			
 			if (_dictObjects.TryGetValue(objectType, out var objList) == false)
 			{
@@ -53,10 +53,10 @@ namespace Nexon
 				switch (objectType)
 				{
 					case EnumObjectType.Player:
-						newObj = new NexonPlayObject();
+						newObj = new NeoplePlayObject();
 						break;
 					case EnumObjectType.Item:
-						newObj = new NexonItemObject();
+						newObj = new NeopleItemObject();
 						break;
 					default:
 						{
@@ -66,7 +66,7 @@ namespace Nexon
 				}	
 			}
 
-			NexonComponent comp = null;
+			NeopleComponent comp = null;
 			string prefabName = string.Empty;
 			switch (objectType)
 			{
@@ -91,14 +91,14 @@ namespace Nexon
 
 			var newObjectInst = GameObject.Instantiate(prefabObj);
 			if (newObjectInst == null) return null;
-			var newNexonGameObject = newObjectInst as GameObject;
-			if (newNexonGameObject == null)
+			var newGameObject = newObjectInst as GameObject;
+			if (newGameObject == null)
 			{
 				GameObject.DestroyImmediate(newObjectInst);
 				return null;
 			}
 			
-			comp = newNexonGameObject.GetComponent<NexonComponent>();
+			comp = newGameObject.GetComponent<NeopleComponent>();
 			if (comp == null)
 			{
 				Debug.LogError("Not exist Component target prefab");

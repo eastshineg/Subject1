@@ -3,9 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NexonPlayerComponent : NexonComponent
+public class NeoplePlayerComponent : NeopleComponent
 {
-    [SerializeField] NexonColliderTrigger _colliderTigger;
+    [SerializeField] NeopleColliderTrigger _colliderTigger;
     // Start is called before the first frame update
 
     int _itemLayer = 0;
@@ -17,21 +17,21 @@ public class NexonPlayerComponent : NexonComponent
         _colliderTigger.RegisterOnCollide(onCollide);
     }
 
-    void onCollide(NexonComponent otherNexonComponent)
+    void onCollide(NeopleComponent otherNeopleComponent)
     {
-        if (otherNexonComponent == null)
+        if (otherNeopleComponent == null)
         {
             return;
         }
 
-        var colliderNexonObject = otherNexonComponent.Object;
-        if (colliderNexonObject == null ||
-            colliderNexonObject.IsValid == false)
+        var colliderNeopleObject = otherNeopleComponent.Object;
+        if (colliderNeopleObject == null ||
+            colliderNeopleObject.IsValid == false)
         {
             return;
         }
         
-        gs.HandleCollision(Object, colliderNexonObject);
+        gs.HandleCollision(Object, colliderNeopleObject);
     }
     void Start()
     {

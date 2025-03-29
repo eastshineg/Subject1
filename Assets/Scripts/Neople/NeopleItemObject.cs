@@ -1,4 +1,4 @@
-﻿namespace Nexon
+﻿namespace Neople
 {
 	public class ItemBlackBoard : BlackBoard
 	{
@@ -11,11 +11,11 @@
 		}
 	}
 	
-	public class NexonItemObject : NexonObject
+	public class NeopleItemObject : NeopleObject
 	{
 		ItemBlackBoard _cachedBlackBoard = null;
 		public ItemBlackBoard CachedBlackBoard => _cachedBlackBoard;
-		public override void Initialize(int objectId, NexonComponent comp)
+		public override void Initialize(int objectId, NeopleComponent comp)
 		{
 			base.Initialize(objectId, comp);
 			_blackBoard ??= new ItemBlackBoard();

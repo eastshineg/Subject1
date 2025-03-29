@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Nexon 
+namespace Neople 
 {
 	public enum EnumObjectType
 	{
@@ -15,11 +15,11 @@ namespace Nexon
 		public abstract void Clear();
 	}
 	
-	public class NexonObject
+	public class NeopleObject
 	{
 		int _objectId = 0;
 		// gameobject는 
-		public NexonComponent Comp { get; private set; }  
+		public NeopleComponent Comp { get; private set; }  
 		protected BlackBoard _blackBoard = null;
 		public virtual EnumObjectType ObjectType => _blackBoard == null ? EnumObjectType.None : _blackBoard.ObjectType;
 		public virtual void Release()
@@ -50,16 +50,16 @@ namespace Nexon
 			}
 		}
 		
-		public virtual void Initialize(int objectId, NexonComponent comp)
+		public virtual void Initialize(int objectId, NeopleComponent comp)
 		{
 			if (comp == null) return;
 			
 			_objectId = objectId;
 			Comp = comp;
-			comp.ChangeNexonObject(this);
+			comp.ChangeNeopleObject(this);
 		}
 
-		public virtual void OnCollision(NexonObject colliderObject)
+		public virtual void OnCollision(NeopleObject colliderObject)
 		{
 			
 		}

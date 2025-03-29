@@ -1,4 +1,4 @@
-using Nexon;
+using Neople;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -30,7 +30,7 @@ public class GameSupervisor : Singleton<GameSupervisor>
           player.Comp.transform.position = pos;
      }
      
-     public void HandleCollision(NexonObject collidee, NexonObject collider)
+     public void HandleCollision(NeopleObject collidee, NeopleObject collider)
      {
           if (collidee == null || collidee.IsValid == false) return;
           if (collider == null || collider.IsValid == false) return;

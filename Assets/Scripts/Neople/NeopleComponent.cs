@@ -1,13 +1,13 @@
-using Nexon;
+using Neople;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NexonComponent : MonoBehaviour
+public class NeopleComponent : MonoBehaviour
 {
-	NexonObject _nexonObject;
-	public NexonObject Object => _nexonObject;
+	NeopleObject _NeopleObject;
+	public NeopleObject Object => _NeopleObject;
 
 	protected GameSupervisor gs
 	{
@@ -22,8 +22,8 @@ public class NexonComponent : MonoBehaviour
 		}
 	}
 	
-	public void ChangeNexonObject(NexonObject nexonObject)
+	public void ChangeNeopleObject(NeopleObject NeopleObject)
 	{
-		_nexonObject = nexonObject;
+		_NeopleObject = NeopleObject;
 	}
 }

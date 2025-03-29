@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-namespace Nexon
+namespace Neople
 {
 	public class PlayerBlackBoard : BlackBoard
 	{
@@ -28,7 +28,7 @@ namespace Nexon
 		}
 	}
 	
-	public class NexonPlayObject : NexonObject
+	public class NeoplePlayObject : NeopleObject
 	{
 		PlayerBlackBoard _cachedBlackBoard = null;
 		PlayerBlackBoard PlayerBoard
@@ -54,7 +54,7 @@ namespace Nexon
 			_isRight = false;
 		}
 		
-		public override void Initialize(int objectId, NexonComponent comp)
+		public override void Initialize(int objectId, NeopleComponent comp)
 		{
 			base.Initialize(objectId, comp);
 			_blackBoard ??= new PlayerBlackBoard();
@@ -65,7 +65,7 @@ namespace Nexon
 			base.Release();
 		}
 
-		public override void OnCollision(NexonObject colliderObject)
+		public override void OnCollision(NeopleObject colliderObject)
 		{
 			base.OnCollision(colliderObject);
 
@@ -80,7 +80,7 @@ namespace Nexon
 				return;
 			}
 			
-			var itemObject = colliderObject as NexonItemObject;
+			var itemObject = colliderObject as NeopleItemObject;
 			
 			var playerBlackBoard = PlayerBoard;
 			playerBlackBoard.ChangeMoveSpeed(playerBlackBoard.OriginSpeed * itemObject.CachedBlackBoard.SpeedEffect);
