@@ -3,16 +3,43 @@ namespace Nexon
 {
 	public class PlayerBlackBoard : BlackBoard
 	{
+		public float OriginSpeed { get; private set; } = 5.0f;
+		public float CurrSpeed { get; private set; } = 5.0f;
+		public float ItemEffectEndTime { get; private set; } = 0.0f;
 		public override EnumObjectType ObjectType => EnumObjectType.Player;
+		public void ChangeMoveSpeed(float speed)
+		{
+			CurrSpeed = speed;
+		}
+		
+		public void ChangeItemEffectEndTime(float time)
+		{
+			ItemEffectEndTime = time;
+		}
+
+		public void ResetMoveSpeed()
+		{
+			CurrSpeed = OriginSpeed;
+		}
+		
 		public override void Clear()
 		{
-			
+			ResetMoveSpeed();
 		}
 	}
 	
 	public class NexonPlayObject : NexonObject
 	{
-		float _moveSpeed = 5.0f;
+		PlayerBlackBoard _cachedBlackBoard = null;
+		PlayerBlackBoard PlayerBoard
+		{
+			get
+			{
+				if (_cachedBlackBoard == null) _cachedBlackBoard = _blackBoard as PlayerBlackBoard;
+				return _cachedBlackBoard;
+			}
+		}
+		
 		bool _pressed = false;
 		bool _isUp = false;
 		bool _isDown = false;
@@ -33,13 +60,42 @@ namespace Nexon
 			_blackBoard ??= new PlayerBlackBoard();
 		}
 
-		public override void Update()
+		public override void Release()
 		{
-			if(IsValid == false)
-				return;
-			
-			base.Update();
+			base.Release();
+		}
 
+		public override void OnCollision(NexonObject colliderObject)
+		{
+			base.OnCollision(colliderObject);
+
+			if (colliderObject == null ||
+			    colliderObject.IsValid == false)
+			{
+				return;
+			}
+
+			if (colliderObject.ObjectType != EnumObjectType.Item)
+			{
+				return;
+			}
+			
+			var itemObject = colliderObject as NexonItemObject;
+			
+			var playerBlackBoard = PlayerBoard;
+			playerBlackBoard.ChangeMoveSpeed(playerBlackBoard.OriginSpeed * itemObject.CachedBlackBoard.SpeedEffect);
+			playerBlackBoard.ChangeItemEffectEndTime(Time.realtimeSinceStartup + itemObject.CachedBlackBoard.EffectDuration);
+			
+			Debug.Log("Change Speed " + playerBlackBoard.CurrSpeed);
+		}
+
+		void updateTransfromByInput()
+		{
+			if (PlayerBoard == null)
+			{
+				return;
+			}
+			
 			if (_pressed == false)
 			{
 				_isUp = Input.GetKey(KeyCode.S);				
@@ -72,7 +128,7 @@ namespace Nexon
 			if (_pressed == true)
 			{
 				var deltaTime = Time.deltaTime;
-				var mv = deltaTime * _moveSpeed;
+				var mv = deltaTime * PlayerBoard.CurrSpeed;
 				if (_isUp)
 				{
 					Comp.transform.position += (Vector3.forward * mv);
@@ -90,6 +146,40 @@ namespace Nexon
 					Comp.transform.position += (Vector3.left * mv);
 				}	
 			}
+		}
+
+		public override void Update()
+		{
+			if(IsValid == false)
+				return;
+			
+			base.Update();
+
+			updateTransfromByInput();
+			updateSpeed();
+		}
+
+		void updateSpeed()
+		{
+			if (_blackBoard == null)
+			{
+				return;
+			}
+
+			var playerBlackBoard = PlayerBoard;
+			if (playerBlackBoard.ItemEffectEndTime <= 0f)
+			{
+				return;
+			}
+			
+			if (Time.realtimeSinceStartup < playerBlackBoard.ItemEffectEndTime)
+			{
+				return;
+			}
+			
+			Debug.Log("Rseet Speed");
+			playerBlackBoard.ResetMoveSpeed();
+			playerBlackBoard.ChangeItemEffectEndTime(0f);
 		}
 	}
 }

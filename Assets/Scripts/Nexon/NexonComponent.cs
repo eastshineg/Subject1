@@ -1,19 +1,29 @@
+using Nexon;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class NexonComponent : MonoBehaviour
 {
-    [SerializeField] Collider _collider;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+	NexonObject _nexonObject;
+	public NexonObject Object => _nexonObject;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+	protected GameSupervisor gs
+	{
+		get
+		{
+			if (GameSupervisor.TryGet(out var inst) == false)
+			{
+				return null;
+			}
+
+			return inst;
+		}
+	}
+	
+	public void ChangeNexonObject(NexonObject nexonObject)
+	{
+		_nexonObject = nexonObject;
+	}
 }

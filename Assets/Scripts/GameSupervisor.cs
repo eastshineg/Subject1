@@ -29,6 +29,19 @@ public class GameSupervisor : Singleton<GameSupervisor>
           pos.z += 1.5f;
           player.Comp.transform.position = pos;
      }
+     
+     public void HandleCollision(NexonObject collidee, NexonObject collider)
+     {
+          if (collidee == null || collidee.IsValid == false) return;
+          if (collider == null || collider.IsValid == false) return;
+
+          collidee.OnCollision(collider);
+
+          if (collider.ObjectType == EnumObjectType.Item)
+          {
+               _objectManager.Release(collider);
+          }
+     }
 
      public void Update()
      {
