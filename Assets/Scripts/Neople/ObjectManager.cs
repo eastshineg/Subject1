@@ -27,9 +27,9 @@ namespace Neople
 			_claimedDictObjects.Remove(NeopleObject);
 		}
 		
-		public NeopleObject Claim(EnumObjectType objectType)
+		public bool TryClaim(EnumObjectType objectType, out NeopleObject outNeopleObject)
 		{
-			NeopleObject newObj = null;
+			outNeopleObject = null;
 			
 			if (_dictObjects.TryGetValue(objectType, out var objList) == false)
 			{
@@ -42,26 +42,26 @@ namespace Neople
 				var obj = objList[i];
 				if (obj.IsValid == false)
 				{
-					newObj = obj;
+					outNeopleObject = obj;
 					objList.RemoveAt(i);
 					break;
 				}
 			}
 
-			if (newObj == null)
+			if (outNeopleObject == null)
 			{
 				switch (objectType)
 				{
 					case EnumObjectType.Player:
-						newObj = new NeoplePlayObject();
+						outNeopleObject = new NeoplePlayObject();
 						break;
 					case EnumObjectType.Item:
-						newObj = new NeopleItemObject();
+						outNeopleObject = new NeopleItemObject();
 						break;
 					default:
 						{
 							Debug.LogError("Not implemented object type");
-							return null;
+							return false;
 						}
 				}	
 			}
@@ -78,10 +78,34 @@ namespace Neople
 					break;
 				default:
 					{
-						Debug.LogError("Not implemented object type");
-						return null;
+						Debug.Log("Not implemented object type component " + objectType);
 					}
-			}	
+					break;
+			}
+
+			comp = createComponent(prefabName);
+			
+			_keyId++;
+			outNeopleObject.Initialize(_keyId, comp);
+
+			// 생성된 데이터는 그냥 버린다.
+			if (outNeopleObject.IsValid == false)
+			{
+				Release(outNeopleObject);
+				return false;
+			}
+			
+			_claimedDictObjects.Add(outNeopleObject);
+			return true;
+		}
+
+		NeopleComponent createComponent(string prefabName)
+		{
+			if (string.IsNullOrEmpty(prefabName) == true)
+			{
+				return null;
+			}
+			
 			var prefabObj = Resources.Load(prefabName, typeof(GameObject));
 			if (prefabObj == null)
 			{
@@ -98,17 +122,13 @@ namespace Neople
 				return null;
 			}
 			
-			comp = newGameObject.GetComponent<NeopleComponent>();
+			var comp = newGameObject.GetComponent<NeopleComponent>();
 			if (comp == null)
 			{
 				Debug.LogError("Not exist Component target prefab");
-				return null;
 			}
 
-			_keyId++;
-			newObj.Initialize(_keyId, comp);
-			_claimedDictObjects.Add(newObj);
-			return newObj;
+			return comp;
 		}
 
 		public void Update()

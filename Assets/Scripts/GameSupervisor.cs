@@ -11,20 +11,18 @@ public class GameSupervisor : Singleton<GameSupervisor>
 
      public void Play()
      {
-          var player = _objectManager.Claim(EnumObjectType.Player);
-          var item = _objectManager.Claim(EnumObjectType.Item);
-          if (player.IsValid == false)
+          if (_objectManager.TryClaim(EnumObjectType.Player, out var player) == false)
           {
                Debug.LogError("player is not valid");
                return;
           }
 
-          if (item.IsValid == false)
+          if (_objectManager.TryClaim(EnumObjectType.Item, out var item) == false)
           {
                Debug.LogError("item is not valid");
                return;
           }
-
+          
           var pos = player.Comp.transform.position;
           pos.z += 1.5f;
           player.Comp.transform.position = pos;

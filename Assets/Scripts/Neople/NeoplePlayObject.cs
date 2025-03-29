@@ -39,7 +39,17 @@ namespace Neople
 				return _cachedBlackBoard;
 			}
 		}
-		
+
+		public override bool IsValid
+		{
+			get
+			{
+				if (base.IsValid == false) return false;
+				if (Comp == null) return false;
+				return true;
+			}
+		}
+
 		bool _pressed = false;
 		bool _isUp = false;
 		bool _isDown = false;

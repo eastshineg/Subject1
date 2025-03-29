@@ -15,6 +15,17 @@
 	{
 		ItemBlackBoard _cachedBlackBoard = null;
 		public ItemBlackBoard CachedBlackBoard => _cachedBlackBoard;
+		
+		public override bool IsValid
+		{
+			get
+			{
+				if (base.IsValid == false) return false;
+				if (Comp == null) return false;
+				return true;
+			}
+		}
+		
 		public override void Initialize(int objectId, NeopleComponent comp)
 		{
 			base.Initialize(objectId, comp);

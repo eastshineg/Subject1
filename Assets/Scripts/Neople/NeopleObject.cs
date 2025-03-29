@@ -39,13 +39,12 @@ namespace Neople
 		}
 		
 
-		public bool IsValid
+		public virtual bool IsValid
 		{
 			get
 			{
 				if (_objectId == 0) return false;
 				if (_blackBoard == null) return false;
-				if (Comp == null) return false;
 				return true;
 			}
 		}
