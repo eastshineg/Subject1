@@ -13,16 +13,16 @@ Summary
   - wsad키를 통해 이동해서 충돌처리를 수행하고 이를 기반으로 속도의 변화가 수행되도록 구현
   - 과제 수행 진입점은 GameSupervisor의 Play()
 
+- **GameSupervisor**
+  - Singleton으로 작성
+  - play 환경 기본 구축을 위한 시작점
+  - 각 NeopleObject의 충돌 이벤트를 제어 및 NeopleObject의 생명주기를 관리 하기 위한 프로세스 구현
 - **NeopleObject**
   - 서로 상호작용 및 제어를 위한 기본 class
   - **NeoplePlayerObject**
     - keyboard의 w,s,a,d 제어 및 item object와 충돌 이후에 속도가 변경되는 프로세스를 수행하기 위한 상세 class
   - **NeopleItemObject**
     - Player object에 영향을 주기 위한 정보를 가지고 있는 상세 class
-- **GameSupervisor**
-  - Singleton으로 작성
-  - play 환경 기본 구축을 위한 시작점
-  - 각 NeopleObject의 충돌 이벤트를 제어 및 NeopleObject의 생명주기를 관리 하기 위한 프로세스 구현
 - **ObjectManager**
   - NeopleObject의 생성 및 파괴를 관리하는 클래스
 - **NeopleComponent**
