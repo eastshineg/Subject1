@@ -11,6 +11,8 @@ Summary
   - Assets/Scene의 subject.scene을 open한다음 play
   - 캐릭터 역할을 하는 object (box)와 아이템 역할을 하는 object (sphere)를 배치
   - wsad키를 통해 이동해서 충돌처리를 수행하고 이를 기반으로 속도의 변화가 수행되도록 구현
+  - 과제 수행 진입점은 GameSupervisor의 Play()
+
 - **NeopleObject**
   - 서로 상호작용 및 제어를 위한 기본 class
   - **NeoplePlayerObject**
