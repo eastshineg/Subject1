@@ -7,6 +7,12 @@ unity 2022.3.52f
 Summary
 -
 ![image](https://github.com/user-attachments/assets/e79c5088-bffa-47e2-a670-fe4b932d38d7)
+- **설명**
+  - 플레이어 -> NeoplePlayerObject(NeopleObject)
+  - 아이템  -> NeopleItemObject(NeopleObject)
+  - 충돌처리 -> NexonComponent간 collider collision정보를 실제 필요한 상태로만 정제해서 전달하는 NexonColliderTrigger를 통해 NexonObject로 전달
+  - ItemObject가 가진 속도변화에 대한 데이터를 BlackBoard에 기록해 두었다가 PlayerObject가 전달받는 Collision이벤트를 통해 속도변화와 유지시간에 대한 상태변화 적용을 수행
+    
 - **플레이**
   - Assets/Scene의 subject.scene을 open한다음 play
   - 캐릭터 역할을 하는 object (box)와 아이템 역할을 하는 object (sphere)를 배치
